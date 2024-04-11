@@ -62,18 +62,33 @@ body {
     transition: 0.5s;
 }
 
-
-.header-text{
-    padding: 100px 30px;
-    font-size: 30px;
+.header {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between; /* Optional: Distributes space between and around content items */
 }
-.header-text h1{
+
+.header-text {
+    padding: 30px; /* Adjusted padding for better alignment */
+    font-size: 30px;
+    flex: 1; /* Allows the text block to grow and fill available space */
+}
+
+.header-text h1 {
     font-size: 60px;
     margin-top: 20px;
 }
-.header-text span{
+
+.header-text span {
     color: #ff004f;
 }
+
+.header-image {
+    flex: 0; /* Prevents the image container from growing, it will be sized based on its content */
+    padding: 30px; /* Adds padding around the image for spacing, adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow effect */
+}
+
 
 /* -----About Me---- */
 #about{
@@ -84,17 +99,6 @@ body {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-}
-.about-col1{
-    flex-basis: 25%; 
-}
-.about-col1 img{
-    width: 130%;
-    padding:0 30px;
-    
-}
-.about-col2{
-    flex-basis: 60%; 
 }
 .sub-title{
     font-size: 60px;
