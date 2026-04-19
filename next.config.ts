@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
 
+const allowedImageHostnames = (process.env.ALLOWED_IMAGE_HOSTNAMES ?? "")
+  .split(",")
+  .map((hostname) => hostname.trim())
+  .filter(Boolean);
+
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+    remotePatterns: allowedImageHostnames.map((hostname) => ({
+      protocol: "https",
+      hostname,
+    })),
   },
   async headers() {
     return [

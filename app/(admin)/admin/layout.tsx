@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { AdminSignOutButton } from "@/components/admin/admin-signout-button";
 import { getAdminSession } from "@/lib/admin-auth";
 
+export const dynamic = "force-dynamic";
+
 const links = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/profile", label: "Profile" },

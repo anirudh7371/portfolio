@@ -252,11 +252,36 @@ function inferSources(question: string): string[] {
   return Array.from(new Set(sources));
 }
 
+function getConfiguredContactAnswer(): string {
+  const email = process.env.PORTFOLIO_CONTACT_EMAIL?.trim();
+  const phone = process.env.PORTFOLIO_CONTACT_PHONE?.trim();
+  const linkedIn = process.env.PORTFOLIO_CONTACT_LINKEDIN?.trim();
+  const contactParts: string[] = [];
+
+  if (email) {
+    contactParts.push(`email at ${email}`);
+  }
+
+  if (phone) {
+    contactParts.push(`call ${phone}`);
+  }
+
+  if (linkedIn) {
+    contactParts.push(`connect via LinkedIn at ${linkedIn}`);
+  }
+
+  if (contactParts.length === 0) {
+    return "You can use the contact details provided in Anirudh's portfolio profile or contact section.";
+  }
+
+  return `You can reach Anirudh by ${contactParts.join(", ")}.`;
+}
+
 function fallbackAnswer(question: string): string {
   const q = question.toLowerCase();
 
   if (q.includes("contact") || q.includes("email") || q.includes("phone")) {
-    return "You can reach Anirudh at anirudh7371@gmail.com, call +91 8295250473, or connect via LinkedIn at https://www.linkedin.com/in/anirudh2511/.";
+    return getConfiguredContactAnswer();
   }
 
   if (q.includes("skill") || q.includes("tech")) {
