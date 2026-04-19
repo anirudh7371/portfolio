@@ -1,0 +1,293 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VISITOR
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContactMessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+enum AvailabilityStatus {
+  OPEN
+  LIMITED
+  CLOSED
+}
+
+enum ChatFeedback {
+  NONE
+  UP
+  DOWN
+}
+
+model User {
+  id               String             @id @default(cuid())
+  name             String?
+  email            String             @unique
+  emailVerified    DateTime?
+  image            String?
+  passwordHash     String?
+  role             Role               @default(EDITOR)
+  accounts         Account[]
+  sessions         Session[]
+  updatedProfiles  Profile[]          @relation("ProfileUpdatedBy")
+  updatedSkills    Skill[]            @relation("SkillUpdatedBy")
+  updatedProjects  Project[]          @relation("ProjectUpdatedBy")
+  updatedServices  Service[]          @relation("ServiceUpdatedBy")
+  updatedMessages  ContactMessage[]   @relation("MessageUpdatedBy")
+  conversations    ChatConversation[] @relation("ConversationUser")
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Profile {
+  id                String   @id @default(cuid())
+  slug              String   @unique @default("primary")
+  headline          String
+  subtitle          String
+  heroDescription   String   @db.Text
+  aboutSummary      String   @db.Text
+  aboutDetails      String   @db.Text
+  location          String
+  email             String
+  phone             String
+  resumeUrl         String
+  ctaPrimaryLabel   String
+  ctaPrimaryHref    String
+  ctaSecondaryLabel String
+  ctaSecondaryHref  String
+  updatedById       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  updatedBy User? @relation("ProfileUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+}
+
+model Skill {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  category    String
+  level       Int
+  iconKey     String?
+  displayOrder Int        @default(0)
+  updatedById String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  updatedBy User?        @relation("SkillUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  projects  ProjectSkill[]
+
+  @@index([category, displayOrder])
+}
+
+model Experience {
+  id           String   @id @default(cuid())
+  title        String
+  organization String
+  startDate    DateTime
+  endDate      DateTime?
+  summary      String   @db.Text
+  achievements Json
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([title, organization, startDate])
+  @@index([displayOrder])
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  summary     String
+  description String        @db.Text
+  githubUrl   String
+  liveUrl     String?
+  thumbnailUrl String?
+  featured    Boolean       @default(false)
+  status      ProjectStatus @default(DRAFT)
+  displayOrder Int          @default(0)
+  updatedById String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  updatedBy User?         @relation("ProjectUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  skills    ProjectSkill[]
+
+  @@index([featured, displayOrder])
+  @@index([status, createdAt])
+}
+
+model ProjectSkill {
+  projectId   String
+  skillId     String
+  displayOrder Int    @default(0)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  skill   Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, skillId])
+  @@index([skillId])
+}
+
+model Service {
+  id          String             @id @default(cuid())
+  title       String             @unique
+  description String             @db.Text
+  pricingModel String
+  availability AvailabilityStatus @default(OPEN)
+  displayOrder Int               @default(0)
+  updatedById String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  updatedBy User? @relation("ServiceUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([displayOrder])
+}
+
+model ContactMessage {
+  id         String               @id @default(cuid())
+  name       String
+  email      String
+  subject    String
+  message    String               @db.Text
+  status     ContactMessageStatus @default(UNREAD)
+  sourceIp   String?
+  userAgent  String?
+  updatedById String?
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+
+  updatedBy User? @relation("MessageUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChatConversation {
+  id               String        @id @default(cuid())
+  visitorSessionId String
+  userId           String?
+  title            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  user     User?         @relation("ConversationUser", fields: [userId], references: [id], onDelete: SetNull)
+  messages ChatMessage[]
+
+  @@index([visitorSessionId])
+  @@index([userId])
+}
+
+model ChatMessage {
+  id             String       @id @default(cuid())
+  conversationId String
+  role           String
+  content        String       @db.Text
+  confidence     Float?
+  sources        Json?
+  model          String?
+  latencyMs      Int?
+  tokens         Int?
+  feedback       ChatFeedback @default(NONE)
+  createdAt      DateTime     @default(now())
+
+  conversation ChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([feedback])
+}
+
+model RagDocument {
+  id         String     @id @default(cuid())
+  sourceType String
+  sourceId   String
+  title      String?
+  content    String     @db.Text
+  metadata   Json?
+  updatedAt  DateTime   @updatedAt
+
+  chunks RagChunk[]
+
+  @@unique([sourceType, sourceId])
+}
+
+model RagChunk {
+  id         String   @id @default(cuid())
+  documentId String
+  chunkIndex Int
+  text       String   @db.Text
+  embedding  Json?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  document RagDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, chunkIndex])
+  @@index([documentId])
+}
