@@ -3966,15 +3966,22 @@ canvas {
 @media (max-width: 860px) {
   .top-nav {
     align-items: stretch;
+    flex-direction: column;
   }
 
   .top-nav-left {
     width: 100%;
     justify-content: space-between;
+    order: 1;
+  }
+
+  .brand-mark {
+    order: 1;
   }
 
   .nav-toggle {
     display: inline-flex;
+    order: 2;
   }
 
   .top-nav-right {
@@ -3985,6 +3992,7 @@ canvas {
     gap: var(--space-md);
     padding-top: var(--space-sm);
     border-top: 1px solid rgba(29, 35, 54, 0.12);
+    order: 2;
   }
 
   .top-nav-right[data-state="open"] {
