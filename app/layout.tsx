@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Anirudh Sharma | AI/ML Portfolio",
+  title: "Anirudh Sharma",
   description:
     "Anirudh Sharma's portfolio featuring AI/ML internships, full-stack projects, and production-grade systems.",
   openGraph: {
