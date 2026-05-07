@@ -5,12 +5,12 @@ import {
   ChevronRight,
   Code2,
   Download,
-  GraduationCap,
+  Network,
   Mail,
-  MapPin,
+  Terminal,
   Phone,
   Quote,
-  ShieldCheck,
+  Gauge,
 } from "lucide-react";
 import { ContactForm } from "@/components/public/contact-form";
 import { PublicSiteShell } from "@/components/public/site-shell";
@@ -21,12 +21,6 @@ const contactCards = [
     text: "anirudh7371@gmail.com",
     href: "mailto:anirudh7371@gmail.com",
     Icon: Mail,
-  },
-  {
-    title: "Phone",
-    text: "+91 82952 50473",
-    href: "tel:+918295250473",
-    Icon: Phone,
   },
   {
     title: "LinkedIn",
@@ -51,20 +45,20 @@ type Principle = {
 
 const principles: Principle[] = [
   {
-    title: "Education",
-    text: "B.Tech in Computer Science and Engineering, VIT Vellore (Sept 2022 - May 2026), CGPA 8.81.",
-    Icon: GraduationCap,
+    title: "Systems Architect",
+    text: "Designing scalable digital systems and robust frontend architecture with durable technical debt control.",
+    Icon: Network,
     wide: true,
   },
   {
-    title: "Location",
-    text: "Bengaluru, Karnataka, India",
-    Icon: MapPin,
+    title: "Clean Code",
+    text: "Type-safe workflows with practical structure and disciplined review loops.",
+    Icon: Terminal,
   },
   {
-    title: "Citizenship",
-    text: "Indian Citizen",
-    Icon: ShieldCheck,
+    title: "Performance",
+    text: "Fluid interactions and optimized runtime assets aligned to business outcomes.",
+    Icon: Gauge,
   },
 ];
 
@@ -79,7 +73,7 @@ export default function ContactPage() {
           <div>
             <p className="ctcv2-kicker">
               <span className="ctcv2-kicker-dot" aria-hidden="true" />
-              Open to high-impact opportunities
+                  Open to high-impact opportunities
             </p>
 
             <h1 className="display-title ctcv2-title">
@@ -89,8 +83,7 @@ export default function ContactPage() {
             </h1>
 
             <p className="section-lead ctcv2-lead">
-              I am Anirudh Sharma, a software and AI engineer based in Bengaluru. I build
-              production-ready platforms, intelligent workflows, and practical solutions
+              I build production-ready platforms, intelligent workflows, and practical solutions
               that translate directly into product and business outcomes.
             </p>
           </div>
@@ -169,10 +162,10 @@ export default function ContactPage() {
           <article className="ctcv2-quote">
             <Quote size={18} strokeWidth={2.2} />
             <p>
-              Open to internships and full-time software engineering or AI engineering
+              Open to freelance Projects and full-time software engineering or AI engineering
               roles with teams that value ownership, quality, and measurable delivery.
             </p>
-            <span>Preferred Location: Bengaluru, Karnataka</span>
+            <span>Software Engineer</span>
           </article>
         </div>
       </section>

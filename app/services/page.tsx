@@ -29,7 +29,7 @@ const services: ServicePanel[] = [
   {
     title: "AI Pipeline Engineering",
     text: "Designing RAG and NLP workflows that convert raw technical inputs into prioritized optimization actions for faster team execution.",
-    chips: ["RAG + NLP", "Google Gemini", "Flask REST APIs", "Azure Deployments"],
+    chips: ["RAG", "LLM Fine-Tuning", "Agentic Workflows", "AI Ethics & Governance", "MultiModal AI"],
     cta: "Design AI Workflow",
     href: "/contact",
     Icon: Workflow,
@@ -37,7 +37,7 @@ const services: ServicePanel[] = [
   {
     title: "Full-Stack AI Product Build",
     text: "Building full-stack products that connect modern interfaces, robust APIs, and intelligent recommendation engines into production-ready experiences.",
-    chips: ["Next.js + React.js", "Python", "PostgreSQL", "OCR + AI Insights"],
+    chips: ["Next.js + React.js", "Python", "PostgreSQL/MongoDB", "OCR + AI Insights"],
     cta: "Build Product",
     href: "/contact",
     Icon: Code2,
@@ -60,15 +60,10 @@ const stacks = [
   {
     label: "AI/ML",
     items: [
-      "NLP",
-      "Deep Learning",
+      "RAG + NLP",
+      "Machine Learning/Deep Learning",
       "Generative AI",
-      "Transformers",
-      "RAG",
       "LLM Fine-Tuning",
-      "TensorFlow",
-      "Scikit-learn",
-      "OpenCV",
       "Hugging Face",
       "LangChain",
     ],
@@ -76,23 +71,21 @@ const stacks = [
   {
     label: "Databases and Tools",
     items: [
-      "MySQL",
+      "PostgresSQL/Prisma",
       "MongoDB",
       "Docker",
       "Git",
       "Postman",
-      "Liquibase",
-      "Bitbucket/Confluence",
+      "Bitbucket/Jenkins",
     ],
   },
   {
-    label: "Core Computer Science",
+    label: "Architecture",
     items: [
-      "Data Structures and Algorithms",
-      "OOP",
-      "DBMS",
-      "Operating Systems",
-      "Computer Networks",
+      "Microservices",
+      "Cloud Infrastructure",
+      "Scalable Databases",
+      "API Ecosystems",
     ],
   },
 ];
@@ -206,10 +199,10 @@ export default function ServicesPage() {
         <div className="srvv2-cta-bubble srvv2-cta-bubble-a" aria-hidden="true" />
         <div className="srvv2-cta-bubble srvv2-cta-bubble-b" aria-hidden="true" />
 
-        <h2 className="section-title">Open to high-impact engineering roles and builds.</h2>
+        <h2 className="section-title">Ready to build the next digital benchmark?</h2>
         <p>
-          Available for internships, full-time opportunities, and focused collaboration
-          engagements in software and AI engineering.
+          Currently available forfull-time opportunities, and focused collaboration
+          engagements/freelance in software and AI engineering.
         </p>
         <div className="cta-row cta-center">
           <Link href="/contact" className="btn btn-primary">

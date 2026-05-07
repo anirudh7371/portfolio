@@ -66,11 +66,10 @@ const milestones: Milestone[] = [
 ];
 
 const architectureFocus = [
-  "Data Structures and Algorithms",
-  "Object-Oriented Programming",
-  "DBMS",
-  "Operating Systems",
-  "Computer Networks",
+  "Microservices",
+  "Cloud Infrastructure",
+  "Scalable Databases",
+  "API Ecosystems",
 ];
 
 const coreEngineeringChips = [
@@ -165,7 +164,7 @@ export default function ExperiencePage() {
           </article>
 
           <article className="expv2-dna-card expv2-dna-architecture">
-            <h3>Core Computer Science</h3>
+            <h3>Architecture</h3>
             <ul>
               {architectureFocus.map((item) => (
                 <li key={item}>{item}</li>
@@ -174,10 +173,9 @@ export default function ExperiencePage() {
           </article>
 
           <article className="expv2-dna-card expv2-dna-metric">
-            <h3>Quality Signal</h3>
-            <p>Built disciplined test coverage practices in enterprise UI delivery cycles.</p>
-            <p className="expv2-metric-value">72%</p>
-            <p className="expv2-metric-label">UI Statement Coverage (Jest)</p>
+            <h3>Metrics Driven</h3>
+            <p>99.9% uptime achieved across all managed production environments.</p>
+            <p className="expv2-metric-value">12+ Shipped Products</p>
           </article>
 
           <article className="expv2-dna-card expv2-dna-precision">

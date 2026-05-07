@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Brain, Cloud, Network, Terminal } from "lucide-react";
 import { PublicSiteShell } from "@/components/public/site-shell";
 
@@ -87,7 +88,15 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="hmv2-hero-visual" aria-hidden="true" />
+          <div className="hmv2-hero-visual" aria-hidden="true">
+            <Image
+              src="/images/Image.jpeg"
+              alt=""
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
         </div>
       </section>
 
@@ -185,12 +194,12 @@ export default function HomePage() {
             <Cloud size={32} strokeWidth={2.2} />
             <div>
               <h3>Tools and Delivery</h3>
-              <p>Docker, Kubernetes, Git, Postman, Liquibase, Bitbucket.</p>
+              <p>AWS, GCP, Docker, Kubernetes, Git, Postman, Bitbucket.</p>
             </div>
           </article>
 
           <article className="hmv2-panel hmv2-panel-interfaces">
-            <h3>Interfaces</h3>
+            <h2><b>Interfaces</b></h2>
             <ul>
               {["React.js", "Next.js", "JavaScript", "HTML/CSS"].map((stack) => (
                 <li key={stack}>{stack}</li>

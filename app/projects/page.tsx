@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, Bot, ChartLine, Shield } from "lucide-react";
@@ -58,6 +61,16 @@ const compactProjects: CompactProject[] = [
 ];
 
 export default function ProjectsPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All Projects");
+
+  const filteredLead = leadProjects.filter(
+    (project) => selectedCategory === "All Projects" || project.tag === selectedCategory,
+  );
+
+  const filteredCompact = compactProjects.filter(
+    (project) => selectedCategory === "All Projects" || project.tag === selectedCategory,
+  );
+
   return (
     <PublicSiteShell activePath="/projects">
       <section className="section-wrap section-space page-hero pjv2-hero">
@@ -74,13 +87,14 @@ export default function ProjectsPage() {
 
       <section className="section-wrap section-space pjv2-shell">
         <div className="pjv2-filters" role="tablist" aria-label="Project categories">
-          {categories.map((item, index) => (
+          {categories.map((item) => (
             <button
               key={item}
-              className={index === 0 ? "pjv2-filter-active" : "pjv2-filter"}
+              className={selectedCategory === item ? "pjv2-filter-active" : "pjv2-filter"}
               type="button"
               role="tab"
-              aria-selected={index === 0}
+              aria-selected={selectedCategory === item}
+              onClick={() => setSelectedCategory(item)}
             >
               {item}
             </button>
@@ -88,64 +102,70 @@ export default function ProjectsPage() {
         </div>
 
         <div className="pjv2-grid">
-          <article className="pjv2-card pjv2-card-main">
-            <div className="pjv2-visual pjv2-visual-neural" aria-hidden="true" />
+          {filteredLead.length > 0 && (
+            <>
+              <article className="pjv2-card pjv2-card-main">
+                <div className="pjv2-visual pjv2-visual-neural" aria-hidden="true" />
 
-            <div className="pjv2-card-body">
-              <div className="pjv2-chip-row">
-                <span className="pjv2-tag">{leadProjects[0]?.tag}</span>
-                <span className="pjv2-stable">
-                  <span aria-hidden="true" /> Stable Release
-                </span>
-              </div>
+                <div className="pjv2-card-body">
+                  <div className="pjv2-chip-row">
+                    <span className="pjv2-tag">{filteredLead[0]?.tag}</span>
+                    <span className="pjv2-stable">
+                      <span aria-hidden="true" /> Stable Release
+                    </span>
+                  </div>
 
-              <h2>{leadProjects[0]?.title}</h2>
-              <p>{leadProjects[0]?.summary}</p>
+                  <h2>{filteredLead[0]?.title}</h2>
+                  <p>{filteredLead[0]?.summary}</p>
 
-              <div className="pjv2-tech-row">
-                {leadProjects[0]?.tech.map((tech) => (
-                  <span key={tech}>{tech}</span>
-                ))}
-              </div>
+                  <div className="pjv2-tech-row">
+                    {filteredLead[0]?.tech.map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
+                  </div>
 
-              <div className="pjv2-link-row">
-                {leadProjects[0]?.links.map((link) => (
-                  <a key={link} href="/contact#inquiry">
-                    {link}
-                    <ArrowRight size={16} strokeWidth={2.2} />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </article>
+                  <div className="pjv2-link-row">
+                    {filteredLead[0]?.links.map((link) => (
+                      <a key={link} href="/contact#inquiry">
+                        {link}
+                        <ArrowRight size={16} strokeWidth={2.2} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </article>
 
-          <article className="pjv2-card pjv2-card-side">
-            <div className="pjv2-visual pjv2-visual-auto" aria-hidden="true" />
+              {filteredLead.length > 1 && (
+                <article className="pjv2-card pjv2-card-side">
+                  <div className="pjv2-visual pjv2-visual-auto" aria-hidden="true" />
 
-            <div className="pjv2-card-body">
-              <span className="pjv2-tag">{leadProjects[1]?.tag}</span>
-              <h3>{leadProjects[1]?.title}</h3>
-              <p>{leadProjects[1]?.summary}</p>
+                  <div className="pjv2-card-body">
+                    <span className="pjv2-tag">{filteredLead[1]?.tag}</span>
+                    <h3>{filteredLead[1]?.title}</h3>
+                    <p>{filteredLead[1]?.summary}</p>
 
-              <div className="pjv2-tech-row">
-                {leadProjects[1]?.tech.map((tech) => (
-                  <span key={tech}>{tech}</span>
-                ))}
-              </div>
+                    <div className="pjv2-tech-row">
+                      {filteredLead[1]?.tech.map((tech) => (
+                        <span key={tech}>{tech}</span>
+                      ))}
+                    </div>
 
-              <a
-                href="https://github.com/anirudh7371/FinWise-AI-Powered-Personal-Finance-Assistant-Tip-Generator"
-                className="pjv2-inline-link"
-                target="_blank"
-                rel="noreferrer"
-              >
-                View GitHub
-                <ArrowRight size={15} strokeWidth={2.2} />
-              </a>
-            </div>
-          </article>
+                    <a
+                      href="https://github.com/anirudh7371/FinWise-AI-Powered-Personal-Finance-Assistant-Tip-Generator"
+                      className="pjv2-inline-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View GitHub
+                      <ArrowRight size={15} strokeWidth={2.2} />
+                    </a>
+                  </div>
+                </article>
+              )}
+            </>
+          )}
 
-          {compactProjects.map((project, index) => (
+          {filteredCompact.map((project, index) => (
             <article key={project.title} className="pjv2-card pjv2-card-wide">
               <div>
                 <span className="pjv2-tag">{project.tag}</span>
